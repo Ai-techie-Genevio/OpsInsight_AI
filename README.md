@@ -152,8 +152,14 @@ Remediation Steps:
 • Bedrock Agent integration
 
 ---
+## Architecture
+
+See [architecture.md](architecture.md)
 
 # Author
 
 Genevio R
 DevOps Engineer | AI & Cloud Enthusiast
+
+
+
