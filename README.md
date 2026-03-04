@@ -1,1 +1,159 @@
-# OpsInsight_AI
+OpsInsight AI — DevOps Incident Analyzer
+
+OpsInsight AI is an intelligent DevOps log analysis system that uses **Generative AI, RAG, and Vector Search** to automatically detect infrastructure incidents and suggest remediation steps.
+
+The system analyzes logs from CI/CD pipelines, Kubernetes clusters, and microservices, identifies the root cause, and recommends solutions using AI reasoning.
+
+---
+
+# Architecture
+
+```
+Log File / CI-CD / Kubernetes Logs
+            ↓
+        Log Parser
+            ↓
+   Embedding Model (SentenceTransformer)
+            ↓
+      Vector Database (FAISS)
+            ↓
+  Retrieve Similar Incidents (RAG)
+            ↓
+      LLM Root Cause Analysis
+            ↓
+   Confidence Agent Re-evaluation
+            ↓
+      Self-Learning Incident Memory
+            ↓
+      DevOps Incident Report
+```
+
+---
+
+# Features
+
+• AI-powered DevOps incident detection
+• Retrieval-Augmented Generation (RAG) for contextual analysis
+• FAISS vector database for semantic log similarity search
+• Self-learning incident memory system
+• Confidence-based AI re-analysis agent
+• Web-based UI for uploading and analyzing logs
+• Supports large log files (1MB+)
+
+---
+
+# Technologies Used
+
+Python
+Streamlit
+AWS Bedrock (Claude Model)
+FAISS Vector Database
+Sentence Transformers
+Retrieval-Augmented Generation (RAG)
+
+---
+
+# Project Structure
+
+```
+opsinsight/
+│
+├── app.py
+├── main.py
+├── log_parser.py
+├── prompt_builder.py
+├── bedrock_client.py
+│
+├── rag/
+│   ├── vector_store.py
+│   └── incident_memory.json
+│
+├── sample_logs/
+│   ├── memory_issue.log
+│   ├── cpu_issue.log
+│   ├── database_outage.log
+│   └── kubernetes_cluster_disk_failure_1MB.txt
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# Installation
+
+Clone the repository
+
+```
+git clone https://github.com/YOUR_USERNAME/opsinsight-ai.git
+cd opsinsight-ai
+```
+
+Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+---
+
+# Running the Web UI
+
+Start the application:
+
+```
+streamlit run app.py
+```
+
+Then open:
+
+```
+http://localhost:8501
+```
+
+Upload any log file and click **Analyze Incident**.
+
+---
+
+# Example Incidents Detected
+
+Memory Exhaustion
+CPU Throttling
+Database Outage
+Kubernetes Disk Pressure
+CI/CD Deployment Failure
+
+---
+
+# Example Output
+
+```
+Incident Type: Memory Exhaustion
+
+Root Cause:
+Container terminated due to OOMKilled and CrashLoopBackOff.
+
+Confidence Score: 0.9
+
+Remediation Steps:
+• Increase container memory limits
+• Investigate application memory leaks
+• Enable memory monitoring alerts
+```
+
+---
+
+# Future Improvements
+
+• Multi-incident retrieval (Top-3 RAG search)
+• Real-time log streaming analysis
+• Slack / PagerDuty alert integration
+• Kubernetes cluster monitoring agent
+• Bedrock Agent integration
+
+---
+
+# Author
+
+Genevio R
+DevOps Engineer | AI & Cloud Enthusiast
