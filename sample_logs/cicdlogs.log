@@ -1,0 +1,71 @@
+2026-03-05 10:01:02 INFO  Starting Jenkins Pipeline
+2026-03-05 10:01:02 INFO  Loading pipeline configuration
+2026-03-05 10:01:03 INFO  Checking out Git repository
+2026-03-05 10:01:04 INFO  Cloning repository https://github.com/company/user-service.git
+2026-03-05 10:01:06 INFO  Fetching branches
+2026-03-05 10:01:07 INFO  Checking out branch main
+2026-03-05 10:01:08 INFO  Git checkout completed
+2026-03-05 10:01:09 INFO  Starting dependency installation
+2026-03-05 10:01:10 INFO  Running: pip install -r requirements.txt
+2026-03-05 10:01:11 INFO  Installing flask
+2026-03-05 10:01:12 INFO  Installing boto3
+2026-03-05 10:01:13 INFO  Installing pandas
+2026-03-05 10:01:14 INFO  Installing numpy
+2026-03-05 10:01:15 INFO  Dependencies installed successfully
+2026-03-05 10:01:16 INFO  Starting build stage
+2026-03-05 10:01:17 INFO  Running build script
+2026-03-05 10:01:18 INFO  Compiling application
+2026-03-05 10:01:19 INFO  Build successful
+2026-03-05 10:01:20 INFO  Running unit tests
+2026-03-05 10:01:21 INFO  Test suite started
+2026-03-05 10:01:22 INFO  Running test_user_api.py
+2026-03-05 10:01:23 INFO  Test passed
+2026-03-05 10:01:24 INFO  Running test_auth.py
+2026-03-05 10:01:25 INFO  Test passed
+2026-03-05 10:01:26 INFO  Running test_db_connection.py
+2026-03-05 10:01:27 INFO  Test passed
+2026-03-05 10:01:28 INFO  All tests passed
+2026-03-05 10:01:29 INFO  Starting Docker build
+2026-03-05 10:01:30 INFO  Building Docker image user-service:1.0.0
+2026-03-05 10:01:31 INFO  Step 1/8 : FROM python:3.11
+2026-03-05 10:01:32 INFO  Step 2/8 : COPY . /app
+2026-03-05 10:01:33 INFO  Step 3/8 : WORKDIR /app
+2026-03-05 10:01:34 INFO  Step 4/8 : RUN pip install -r requirements.txt
+2026-03-05 10:01:35 INFO  Step 5/8 : EXPOSE 8080
+2026-03-05 10:01:36 INFO  Step 6/8 : CMD ["python","app.py"]
+2026-03-05 10:01:37 INFO  Docker image built successfully
+2026-03-05 10:01:38 INFO  Pushing image to ECR
+2026-03-05 10:01:39 INFO  Uploading layer 1
+2026-03-05 10:01:40 INFO  Uploading layer 2
+2026-03-05 10:01:41 INFO  Uploading layer 3
+2026-03-05 10:01:42 INFO  Docker push completed
+2026-03-05 10:01:43 INFO  Starting Kubernetes deployment
+2026-03-05 10:01:44 INFO  Applying deployment.yaml
+2026-03-05 10:01:45 INFO  Deployment created
+2026-03-05 10:01:46 INFO  Scaling replicas to 2
+2026-03-05 10:01:47 INFO  Waiting for pods to start
+2026-03-05 10:01:48 INFO  Pod user-service-76d5c9f8d9 started
+2026-03-05 10:01:49 INFO  Pod user-service-76d5c9f8d9 running
+2026-03-05 10:01:50 INFO  Pod user-service-76d5c9f8d9 health check passed
+2026-03-05 10:01:51 INFO  Pod user-service-76d5c9f8d9 memory usage 75%
+2026-03-05 10:01:52 WARN  Pod user-service-76d5c9f8d9 memory usage 88%
+2026-03-05 10:01:53 WARN  Pod user-service-76d5c9f8d9 memory usage 92%
+2026-03-05 10:01:54 WARN  High memory usage detected
+2026-03-05 10:01:55 ERROR Container user-service terminated unexpectedly
+2026-03-05 10:01:56 ERROR Reason: OOMKilled
+2026-03-05 10:01:57 WARN  Restarting container
+2026-03-05 10:01:58 INFO  Container restarted
+2026-03-05 10:01:59 WARN  CrashLoopBackOff detected
+2026-03-05 10:02:00 INFO  Pod restarting attempt 1
+2026-03-05 10:02:01 WARN  Pod restart failed
+2026-03-05 10:02:02 INFO  Pod restarting attempt 2
+2026-03-05 10:02:03 ERROR Container crashed again
+2026-03-05 10:02:04 ERROR Memory usage exceeded limit
+2026-03-05 10:02:05 WARN  Container memory limit 512Mi exceeded
+2026-03-05 10:02:06 ERROR Pod entering CrashLoopBackOff
+2026-03-05 10:02:07 INFO  Deployment health check failed
+2026-03-05 10:02:08 ERROR Pipeline stage failed
+2026-03-05 10:02:09 ERROR Deployment aborted
+2026-03-05 10:02:10 INFO  Rolling back deployment
+2026-03-05 10:02:11 INFO  Previous version restored
+2026-03-05 10:02:12 INFO  Pipeline finished with errors

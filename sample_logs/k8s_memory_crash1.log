@@ -1,0 +1,27 @@
+2024-03-01T10:21:28Z kubelet[node-1] INFO  Pod sandbox created for user-service-7f89d9c6b5-xk2lm (namespace=production)
+2024-03-01T10:21:30Z kubelet[node-1] INFO  Pulling image "registry.company.com/user-service:v2.4.1"
+2024-03-01T10:21:31Z kubelet[node-1] INFO  Successfully pulled image
+2024-03-01T10:21:32Z kubelet[node-1] INFO  Started container user-service
+
+2024-03-01T10:22:05Z app[user-service] INFO  Processing request id=84729 latency=120ms
+2024-03-01T10:22:10Z app[user-service] WARN  Memory usage high: used=768Mi limit=1024Mi (75%)
+2024-03-01T10:22:15Z app[user-service] WARN  GC activity increased, heap usage=820Mi
+2024-03-01T10:22:20Z metrics-server INFO  Pod user-service-7f89d9c6b5-xk2lm memory usage=910Mi
+
+2024-03-01T10:22:30Z kubelet[node-1] WARNING  Memory pressure detected on node
+2024-03-01T10:22:32Z kernel[node-1] INFO  Out of memory: Kill process 24567 (java) score 987 or sacrifice child
+2024-03-01T10:22:32Z kernel[node-1] INFO  Killed process 24567 (java) total-vm:1500MiB, anon-rss:1020MiB
+
+2024-03-01T10:22:35Z kubelet[node-1] ERROR  Container user-service terminated
+2024-03-01T10:22:35Z kubelet[node-1] ERROR  Reason: OOMKilled
+2024-03-01T10:22:35Z kubelet[node-1] INFO   Container exit code: 137
+2024-03-01T10:22:36Z kubelet[node-1] INFO   Pod status changed to CrashLoopBackOff
+
+2024-03-01T10:22:40Z kubelet[node-1] INFO   Restarting container user-service (restart count=1)
+2024-03-01T10:22:42Z kubelet[node-1] INFO   Container started successfully
+
+2024-03-01T10:23:00Z app[user-service] WARN  Memory usage high: used=950Mi limit=1024Mi (92%)
+2024-03-01T10:23:04Z kernel[node-1] INFO  Out of memory: Kill process 24789 (java) score 992
+2024-03-01T10:23:05Z kubelet[node-1] ERROR  Container user-service terminated
+2024-03-01T10:23:05Z kubelet[node-1] ERROR  Reason: OOMKilled
+2024-03-01T10:23:06Z kubelet[node-1] WARNING Back-off restarting failed containers

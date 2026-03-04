@@ -1,0 +1,22 @@
+[
+    {
+        "incident_type": "Memory Exhaustion",
+        "description": "Container terminated with OOMKilled and CrashLoopBackOff due to high memory usage.",
+        "recommended_fix": "Increase container memory limits and investigate memory leaks."
+    },
+    {
+        "incident_type": "CPU Throttling",
+        "description": "Application performance degraded due to CPU limits being reached in Kubernetes pods.",
+        "recommended_fix": "Increase CPU limits or optimize CPU usage."
+    },
+    {
+        "incident_type": "Disk Pressure",
+        "description": "Node experiencing disk pressure causing pods to be evicted.",
+        "recommended_fix": "Clean disk space or increase node storage."
+    },
+    {
+        "incident_type": "Pod Crash",
+        "description": "Out of memory error",
+        "recommended_fix": "Increase the memory limit for the pod, Optimize the application to use less memory, Implement a memory management strategy, such as using a memory limit or request"
+    }
+]

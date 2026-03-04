@@ -1,0 +1,55 @@
+ python main.py --log sample_logs/k8s_memory_crash.log
+
+Log -> Claude result (Basic)
+
+Filtered Logs → Claude   (Done)
+
+--------------------------------
+
+Upgrade 1 
+--------
+
+Step 1- Create RAG
+
+RAG :
+
+Filtered Logs
+      ↓
+Search incident memory
+      ↓
+Retrieve relevant past cases
+      ↓
+Inject into prompt
+      ↓
+Claude
+
+
+mkdir rag
+rag/incident_memory.json
+
+
+Step 2 – Create Basic Retrieval Engine
+
+
+rag/vector_store.py
+
+modify main.py
+
+---------------------
+
+output 
+-----
+
+Log file
+   ↓
+Log parser
+   ↓
+RAG memory retrieval
+   ↓
+Prompt builder (inject memory)
+   ↓
+Claude (Bedrock)
+   ↓
+Structured JSON output
+   ↓
+Confidence evaluation

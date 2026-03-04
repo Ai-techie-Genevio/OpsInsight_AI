@@ -1,0 +1,69 @@
+2026-03-05 14:01:01 INFO  Starting user-service container
+2026-03-05 14:01:02 INFO  Loading application configuration
+2026-03-05 14:01:03 INFO  Initializing database connection pool
+2026-03-05 14:01:04 INFO  Connecting to database db-prod.cluster.local:5432
+2026-03-05 14:01:05 INFO  Connection established
+2026-03-05 14:01:06 INFO  Service ready
+2026-03-05 14:01:07 INFO  Incoming request GET /api/users
+2026-03-05 14:01:08 INFO  Query executed successfully
+2026-03-05 14:01:09 INFO  Incoming request POST /api/orders
+2026-03-05 14:01:10 INFO  Query executed successfully
+2026-03-05 14:01:11 INFO  Incoming request GET /api/products
+2026-03-05 14:01:12 INFO  Query executed successfully
+2026-03-05 14:01:13 INFO  Incoming request GET /api/users
+2026-03-05 14:01:14 INFO  Query executed successfully
+2026-03-05 14:01:15 INFO  Incoming request POST /api/orders
+2026-03-05 14:01:16 INFO  Query executed successfully
+2026-03-05 14:01:17 INFO  Monitoring database health
+2026-03-05 14:01:18 INFO  DB latency: 30ms
+2026-03-05 14:01:19 INFO  DB latency: 35ms
+2026-03-05 14:01:20 WARN  DB latency: 120ms
+2026-03-05 14:01:21 WARN  DB latency: 250ms
+2026-03-05 14:01:22 WARN  DB latency: 400ms
+2026-03-05 14:01:23 ERROR Database response timeout
+2026-03-05 14:01:24 ERROR Connection pool exhausted
+2026-03-05 14:01:25 WARN  Retrying database connection
+2026-03-05 14:01:26 INFO  Attempting DB reconnect
+2026-03-05 14:01:27 ERROR Connection refused
+2026-03-05 14:01:28 ERROR Unable to acquire DB connection
+2026-03-05 14:01:29 WARN  Request queued due to DB unavailability
+2026-03-05 14:01:30 ERROR Query execution failed
+2026-03-05 14:01:31 ERROR SQLSTATE 08006 connection failure
+2026-03-05 14:01:32 ERROR Database connection lost
+2026-03-05 14:01:33 WARN  Retrying DB connection attempt 2
+2026-03-05 14:01:34 ERROR Database unreachable
+2026-03-05 14:01:35 WARN  Service degradation detected
+2026-03-05 14:01:36 INFO  Circuit breaker activated
+2026-03-05 14:01:37 ERROR Failed to execute query
+2026-03-05 14:01:38 ERROR Connection pool exhausted
+2026-03-05 14:01:39 ERROR Request timeout while waiting for DB connection
+2026-03-05 14:01:40 WARN  API latency increased
+2026-03-05 14:01:41 WARN  Queue backlog increasing
+2026-03-05 14:01:42 ERROR Unable to process request
+2026-03-05 14:01:43 ERROR Database read timeout
+2026-03-05 14:01:44 ERROR Database write timeout
+2026-03-05 14:01:45 WARN  DB health check failed
+2026-03-05 14:01:46 ERROR Connection refused
+2026-03-05 14:01:47 WARN  Retrying DB connection attempt 3
+2026-03-05 14:01:48 ERROR DB connection attempt failed
+2026-03-05 14:01:49 ERROR Service cannot access database
+2026-03-05 14:01:50 WARN  Fallback mechanism triggered
+2026-03-05 14:01:51 ERROR User request failed
+2026-03-05 14:01:52 ERROR API returned HTTP 500
+2026-03-05 14:01:53 ERROR Order processing failed
+2026-03-05 14:01:54 WARN  Health check endpoint returning degraded status
+2026-03-05 14:01:55 ERROR Database outage detected
+2026-03-05 14:01:56 WARN  Pod restarting due to service failure
+2026-03-05 14:01:57 INFO  Kubernetes restarting container
+2026-03-05 14:01:58 INFO  Container terminated
+2026-03-05 14:01:59 INFO  Container restarting
+2026-03-05 14:02:00 INFO  Initializing service
+2026-03-05 14:02:01 INFO  Attempting DB connection
+2026-03-05 14:02:02 ERROR Database still unreachable
+2026-03-05 14:02:03 WARN  Retrying DB connection
+2026-03-05 14:02:04 ERROR Connection refused
+2026-03-05 14:02:05 ERROR Database outage persists
+2026-03-05 14:02:06 WARN  Alerting DevOps team
+2026-03-05 14:02:07 INFO  Incident created in monitoring system
+2026-03-05 14:02:08 ERROR System operating in degraded mode
+2026-03-05 14:02:09 INFO  Awaiting database recovery
