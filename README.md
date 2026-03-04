@@ -4,6 +4,12 @@ OpsInsight AI is an intelligent DevOps log analysis system that uses **Generativ
 
 The system analyzes logs from CI/CD pipelines, Kubernetes clusters, and microservices, identifies the root cause, and recommends solutions using AI reasoning.
 
+# OpsInsight AI
+
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![AI](https://img.shields.io/badge/AI-LLM-green)
+![VectorDB](https://img.shields.io/badge/VectorDB-FAISS-orange)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
 ---
 
 # Architecture
@@ -155,6 +161,49 @@ Remediation Steps:
 ## Architecture
 
 See [architecture.md](architecture.md)
+
+## Demo
+
+### Upload Log File
+
+The user uploads a DevOps log file through the Streamlit UI.
+
+### AI Analysis
+
+OpsInsight AI analyzes the log using RAG + LLM.
+
+### Output
+
+```
+Incident Type: Kubernetes Disk Pressure
+
+Root Cause:
+Node filesystem exhaustion causing pod eviction and cluster instability.
+
+Confidence Score: 0.91
+
+Remediation Steps:
+- Free disk space on affected nodes
+- Clean unused container images
+- Enable log rotation
+- Add disk monitoring alerts
+```
+
+## Why This Project Matters
+
+Modern DevOps environments generate massive volumes of logs from CI/CD pipelines, microservices, and Kubernetes clusters.
+Manually analyzing these logs during incidents is slow and error-prone.
+
+OpsInsight AI automates incident analysis by combining:
+
+* Vector search (FAISS)
+* Retrieval-Augmented Generation (RAG)
+* Large Language Models (AWS Bedrock)
+* Self-learning incident memory
+
+The system enables faster root cause detection and intelligent remediation suggestions.
+
+
 
 # Author
 
