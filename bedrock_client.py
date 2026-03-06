@@ -2,12 +2,27 @@
 
 import boto3
 import json
+import os
 
 
 class BedrockClient:
 
-    def __init__(self, region_name="us-east-1"):
-        self.client = boto3.client("bedrock-runtime", region_name=region_name)
+    def __init__(self):
+
+        # Read AWS credentials from environment variables
+        aws_access_key = os.getenv("AWS_ACCESS_KEY_ID")
+        aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+        aws_region = os.getenv("AWS_REGION", "us-east-1")
+
+        # Create Bedrock runtime client
+        self.client = boto3.client(
+            service_name="bedrock-runtime",
+            region_name=aws_region,
+            aws_access_key_id=aws_access_key,
+            aws_secret_access_key=aws_secret_key
+        )
+
+        # Claude Haiku model (fast + cheap)
         self.model_id = "anthropic.claude-3-haiku-20240307-v1:0"
 
     def invoke_model(self, prompt: str) -> str:
@@ -15,7 +30,7 @@ class BedrockClient:
         body = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 500,
-            "temperature": 0.2,  # Low for deterministic RCA
+            "temperature": 0.2,
             "messages": [
                 {
                     "role": "user",
@@ -25,6 +40,7 @@ class BedrockClient:
         }
 
         try:
+
             response = self.client.invoke_model(
                 modelId=self.model_id,
                 body=json.dumps(body)
@@ -34,6 +50,7 @@ class BedrockClient:
 
             if "content" in response_body and len(response_body["content"]) > 0:
                 return response_body["content"][0]["text"]
+
             else:
                 raise Exception("Unexpected response format from Bedrock.")
 
