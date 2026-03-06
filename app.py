@@ -5,45 +5,73 @@ from prompt_builder import build_prompt
 from bedrock_client import BedrockClient
 from rag.vector_store import SimpleIncidentMemory
 
-st.title("OpsInsight AI - DevOps Incident Analyzer")
 
+st.set_page_config(
+    page_title="OpsInsight AI",
+    page_icon="🤖",
+    layout="wide"
+)
+
+# Title
+st.title("🤖 OpsInsight AI")
+st.subheader("AI-Powered DevOps Incident Analyzer")
+
+# Author
+st.markdown("Built by **Genevio – DevOps Engineer**")
+
+st.write(
+    "Upload DevOps or infrastructure logs and let AI analyze incidents, "
+    "identify the root cause, and recommend remediation steps."
+)
+
+# Upload file
 uploaded_file = st.file_uploader("Upload Log File", type=["log", "txt"])
 
-if uploaded_file is not None:
 
-    log_text = uploaded_file.read().decode("utf-8")
+if uploaded_file:
 
-    st.subheader("Log Preview")
-    st.code(log_text[:500])
+    log_content = uploaded_file.read().decode("utf-8")
 
-    if st.button("Analyze Incident"):
+    st.markdown("### Log Preview")
+    st.code(log_content[:1000], language="text")
 
-        log_lines = log_text.splitlines()
-        filtered_log = extract_relevant_sections(log_lines)
+    if st.button("Analyze Incident 🚀"):
 
-        memory = SimpleIncidentMemory()
-        retrieved_incident = memory.retrieve_similar_incident(filtered_log)
+        with st.spinner("AI is analyzing the logs..."):
 
-        prompt = build_prompt(filtered_log, retrieved_incident)
+            log_lines = log_content.split("\n")
+            filtered_log = extract_relevant_sections(log_lines)
 
-        bedrock = BedrockClient()
+            memory = SimpleIncidentMemory()
+            retrieved_incident = memory.retrieve_similar_incident(filtered_log)
 
-        model_output = bedrock.invoke_model(prompt)
+            prompt = build_prompt(filtered_log, retrieved_incident)
 
-        try:
+            bedrock = BedrockClient()
+            model_output = bedrock.invoke_model(prompt)
+
             result = json.loads(model_output)
 
-            st.subheader("Incident Analysis")
+        st.success("Analysis Complete")
 
-            st.write("**Incident Type:**", result["incident_type"])
-            st.write("**Root Cause:**", result["root_cause"])
-            st.write("**Confidence:**", result["confidence_score"])
+        col1, col2 = st.columns(2)
 
-            st.write("**Remediation Steps:**")
+        with col1:
+            st.markdown("### 🚨 Incident Type")
+            st.write(result["incident_type"])
 
-            for step in result["remediation_steps"]:
-                st.write("•", step)
+            st.markdown("### 🔍 Root Cause")
+            st.write(result["root_cause"])
 
-        except:
-            st.error("Model output parsing failed")
-            st.text(model_output)
+        with col2:
+            st.markdown("### 📊 Confidence Score")
+            st.write(result["confidence_score"])
+
+        st.markdown("### 🛠 Recommended Fix")
+
+        for step in result["remediation_steps"]:
+            st.write("•", step)
+
+# Footer
+st.markdown("---")
+st.caption("© 2026 Genevio | OpsInsight AI")
