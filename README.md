@@ -1,5 +1,7 @@
 OpsInsight AI — DevOps Incident Analyzer
 
+OpsInsight AI is a prototype AIOps platform that automatically analyzes DevOps infrastructure logs and generates incident root cause analysis using Retrieval Augmented Generation (RAG) and AWS Bedrock.
+
 OpsInsight AI is an intelligent DevOps log analysis system that uses **Generative AI, RAG, and Vector Search** to automatically detect infrastructure incidents and suggest remediation steps.
 
 The system analyzes logs from CI/CD pipelines, Kubernetes clusters, and microservices, identifies the root cause, and recommends solutions using AI reasoning.
@@ -139,17 +141,38 @@ CI/CD Deployment Failure
 # Example Output
 
 ```
+📜 Log Summary
+Pods are repeatedly restarting due to memory pressure detected on the node.
+
+⚠ Possible Issue
+Application memory leak causing container restarts.
+
+🚦 Severity
+High
+
+
+⏱ Incident Timeline
+• 13:21:11 Pod restarted
+• 13:21:14 Memory spike detected
+• 13:21:18 OOMKilled event
+• 13:21:22 Container restarted
+
+
+📊 Incident Overview
+
 Incident Type: Memory Exhaustion
+
+Confidence Score: 0.92
 
 Root Cause:
 Container terminated due to OOMKilled and CrashLoopBackOff.
 
-Confidence Score: 0.9
 
-Remediation Steps:
+🛠 Remediation Steps
 • Increase container memory limits
 • Investigate application memory leaks
 • Enable memory monitoring alerts
+• Configure Kubernetes resource limits
 ```
 
 ---
