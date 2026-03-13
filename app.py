@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 from log_parser import extract_relevant_sections
-from prompt_builder import build_prompt, build_summary_prompt
+from prompt_builder import build_prompt, build_summary_prompt, build_timeline_prompt
 from bedrock_client import BedrockClient
 from rag.vector_store import SimpleIncidentMemory
 
@@ -88,11 +88,24 @@ if uploaded_file:
 
                 st.markdown("---")
 
-                # STEP 5: Retrieve similar past incident (RAG)
+                # STEP 5: INCIDENT TIMELINE
+                timeline_prompt = build_timeline_prompt(filtered_log)
+                timeline_output = bedrock.invoke_model(timeline_prompt)
+
+                timeline_result = json.loads(timeline_output)
+
+                st.markdown("### ⏱ Incident Timeline")
+
+                for event in timeline_result.get("timeline", []):
+                    st.write("•", event)
+
+                st.markdown("---")
+
+                # STEP 6: Retrieve similar past incident (RAG)
                 memory = SimpleIncidentMemory()
                 retrieved_incident = memory.retrieve_similar_incident(filtered_log)
 
-                # STEP 6: Root Cause Analysis
+                # STEP 7: Root Cause Analysis
                 prompt = build_prompt(filtered_log, retrieved_incident)
                 model_output = bedrock.invoke_model(prompt)
 
