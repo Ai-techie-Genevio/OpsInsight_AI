@@ -41,3 +41,33 @@ Rules:
 """
 
     return prompt
+
+
+def build_summary_prompt(log_content: str) -> str:
+    """
+    Build prompt for AI log summarization.
+    Used before root cause analysis.
+    """
+
+    prompt = f"""
+You are a DevOps AI observability assistant.
+
+Analyze the following infrastructure logs and summarize what is happening.
+
+Logs:
+{log_content}
+
+Return STRICT JSON only in this format:
+
+{{
+    "summary": "",
+    "possible_issue": "",
+    "severity": "Low | Medium | High"
+}}
+
+Rules:
+- Do NOT include explanations outside JSON.
+- Return valid JSON only.
+"""
+
+    return prompt
