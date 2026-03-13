@@ -19,20 +19,25 @@ Log File / CI-CD / Kubernetes Logs
             ↓
         Log Parser
             ↓
-   Embedding Model (SentenceTransformer)
+     Log Filtering Engine
+            ↓
+   AI Log Summary (Bedrock Claude)
+            ↓
+   Incident Timeline Extraction
+            ↓
+ Embedding Model (SentenceTransformer)
             ↓
       Vector Database (FAISS)
             ↓
-  Retrieve Similar Incidents (RAG)
+ Retrieve Similar Incidents (RAG)
             ↓
       LLM Root Cause Analysis
             ↓
-   Confidence Agent Re-evaluation
+  Confidence-Based Evaluation
             ↓
-      Self-Learning Incident Memory
+   Self-Learning Incident Memory
             ↓
       DevOps Incident Report
-```
 
 ---
 
