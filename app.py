@@ -14,6 +14,8 @@ st.set_page_config(
 
 # Title
 st.title("🤖 OpsInsight AI")
+st.caption("AI-driven incident analysis using RAG + AWS Bedrock")
+
 st.subheader("AI-Powered DevOps Incident Analyzer")
 
 # Author
@@ -31,10 +33,9 @@ uploaded_file = st.file_uploader("Upload Log File", type=["log", "txt"])
 if uploaded_file:
 
     log_content = uploaded_file.read().decode("utf-8", errors="ignore")
-
     log_lines = log_content.split("\n")
 
-    # Show preview
+    # Log Preview
     st.markdown("### Log Preview")
     preview_text = "\n".join(log_lines[:40])
     st.code(preview_text, language="text")
@@ -59,7 +60,7 @@ if uploaded_file:
                 if important_lines:
                     filtered_log = "\n".join(important_lines[-60:])
 
-                # STEP 3: Limit size for LLM safety
+                # STEP 3: Limit log size for LLM
                 filtered_log = filtered_log[:8000]
 
                 # Initialize Bedrock client
@@ -68,7 +69,6 @@ if uploaded_file:
                 # STEP 4: AI LOG SUMMARY
                 summary_prompt = build_summary_prompt(filtered_log)
                 summary_output = bedrock.invoke_model(summary_prompt)
-
                 summary_result = json.loads(summary_output)
 
                 st.success("Log Summary Generated")
@@ -91,7 +91,6 @@ if uploaded_file:
                 # STEP 5: INCIDENT TIMELINE
                 timeline_prompt = build_timeline_prompt(filtered_log)
                 timeline_output = bedrock.invoke_model(timeline_prompt)
-
                 timeline_result = json.loads(timeline_output)
 
                 st.markdown("### ⏱ Incident Timeline")
@@ -108,24 +107,37 @@ if uploaded_file:
                 # STEP 7: Root Cause Analysis
                 prompt = build_prompt(filtered_log, retrieved_incident)
                 model_output = bedrock.invoke_model(prompt)
-
                 result = json.loads(model_output)
 
                 st.success("Incident Analysis Complete")
 
-                col1, col2 = st.columns(2)
+                # INCIDENT DASHBOARD METRICS
+                st.markdown("### 📊 Incident Overview")
 
-                with col1:
-                    st.markdown("### 🚨 Incident Type")
-                    st.write(result.get("incident_type", "Unknown"))
+                metric1, metric2, metric3 = st.columns(3)
 
-                    st.markdown("### 🔍 Root Cause")
-                    st.write(result.get("root_cause", "Not detected"))
+                metric1.metric(
+                    label="🚨 Incident Type",
+                    value=result.get("incident_type", "Unknown")
+                )
 
-                with col2:
-                    st.markdown("### 📊 Confidence Score")
-                    st.write(result.get("confidence_score", "N/A"))
+                metric2.metric(
+                    label="📊 Confidence Score",
+                    value=result.get("confidence_score", "N/A")
+                )
 
+                metric3.metric(
+                    label="⚠ Severity",
+                    value=summary_result.get("severity", "Unknown")
+                )
+
+                st.markdown("---")
+
+                # Root Cause
+                st.markdown("### 🔍 Root Cause")
+                st.write(result.get("root_cause", "Not detected"))
+
+                # Recommended Fix
                 st.markdown("### 🛠 Recommended Fix")
 
                 for step in result.get("remediation_steps", []):
