@@ -71,3 +71,36 @@ Rules:
 """
 
     return prompt
+
+
+def build_timeline_prompt(log_content: str) -> str:
+    """
+    Build prompt for incident timeline extraction.
+    """
+
+    prompt = f"""
+You are a DevOps incident investigation AI.
+
+From the following infrastructure logs extract the key incident timeline.
+
+Logs:
+{log_content}
+
+Return STRICT JSON only in this format:
+
+{{
+    "timeline": [
+        "timestamp event",
+        "timestamp event",
+        "timestamp event"
+    ]
+}}
+
+Rules:
+- Extract only important events
+- Focus on ERROR, WARN, CRITICAL logs
+- Keep the timeline short and meaningful
+- Do NOT include explanations outside JSON
+"""
+
+    return prompt
