@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from log_parser import read_log_file, extract_relevant_sections
+from log_parser import extract_relevant_sections
 from prompt_builder import build_prompt
 from bedrock_client import BedrockClient
 from rag.vector_store import SimpleIncidentMemory
@@ -30,47 +30,78 @@ uploaded_file = st.file_uploader("Upload Log File", type=["log", "txt"])
 
 if uploaded_file:
 
-    log_content = uploaded_file.read().decode("utf-8")
+    log_content = uploaded_file.read().decode("utf-8", errors="ignore")
 
+    # Split lines
+    log_lines = log_content.split("\n")
+
+    # Show preview
     st.markdown("### Log Preview")
-    st.code(log_content[:1000], language="text")
+    preview_text = "\n".join(log_lines[:40])
+    st.code(preview_text, language="text")
+
+    st.info(f"Total log lines: {len(log_lines)}")
 
     if st.button("Analyze Incident 🚀"):
 
         with st.spinner("AI is analyzing the logs..."):
 
-            log_lines = log_content.split("\n")
-            filtered_log = extract_relevant_sections(log_lines)
+            try:
 
-            memory = SimpleIncidentMemory()
-            retrieved_incident = memory.retrieve_similar_incident(filtered_log)
+                # STEP 1: Extract relevant sections
+                filtered_log = extract_relevant_sections(log_lines)
 
-            prompt = build_prompt(filtered_log, retrieved_incident)
+                # STEP 2: Additional filtering for large logs
+                important_lines = [
+                    line for line in filtered_log.split("\n")
+                    if "ERROR" in line or "WARN" in line or "CRITICAL" in line
+                ]
 
-            bedrock = BedrockClient()
-            model_output = bedrock.invoke_model(prompt)
+                # If important lines exist, use them
+                if important_lines:
+                    filtered_log = "\n".join(important_lines[-60:])  # last 60 important lines
 
-            result = json.loads(model_output)
+                # STEP 3: Hard limit to avoid Bedrock overflow
+                filtered_log = filtered_log[:8000]
 
-        st.success("Analysis Complete")
+                # STEP 4: Retrieve similar past incident (RAG)
+                memory = SimpleIncidentMemory()
+                retrieved_incident = memory.retrieve_similar_incident(filtered_log)
 
-        col1, col2 = st.columns(2)
+                # STEP 5: Build prompt
+                prompt = build_prompt(filtered_log, retrieved_incident)
 
-        with col1:
-            st.markdown("### 🚨 Incident Type")
-            st.write(result["incident_type"])
+                # STEP 6: Invoke Bedrock
+                bedrock = BedrockClient()
+                model_output = bedrock.invoke_model(prompt)
 
-            st.markdown("### 🔍 Root Cause")
-            st.write(result["root_cause"])
+                # Parse response
+                result = json.loads(model_output)
 
-        with col2:
-            st.markdown("### 📊 Confidence Score")
-            st.write(result["confidence_score"])
+                st.success("Analysis Complete")
 
-        st.markdown("### 🛠 Recommended Fix")
+                col1, col2 = st.columns(2)
 
-        for step in result["remediation_steps"]:
-            st.write("•", step)
+                with col1:
+                    st.markdown("### 🚨 Incident Type")
+                    st.write(result.get("incident_type", "Unknown"))
+
+                    st.markdown("### 🔍 Root Cause")
+                    st.write(result.get("root_cause", "Not detected"))
+
+                with col2:
+                    st.markdown("### 📊 Confidence Score")
+                    st.write(result.get("confidence_score", "N/A"))
+
+                st.markdown("### 🛠 Recommended Fix")
+
+                for step in result.get("remediation_steps", []):
+                    st.write("•", step)
+
+            except Exception as e:
+
+                st.error("Incident analysis failed.")
+                st.code(str(e))
 
 # Footer
 st.markdown("---")

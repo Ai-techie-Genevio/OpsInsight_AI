@@ -1,3 +1,26 @@
-2024-03-05 101021 WARN  Memory usage exceeded 90%
-2024-03-05 101022 ERROR Container terminated due to OOMKilled
-2024-03-05 101025 ERROR Pod entered CrashLoopBackOff
+2026-03-06 12:45:02 INFO  TransactionService - Processing request id=TXN87219
+2026-03-06 12:45:03 INFO  CacheManager - Loading customer profile into cache
+
+2026-03-06 12:45:04 WARN  MemoryMonitor - JVM Heap usage exceeded 75%
+Heap Used: 2.3GB / 3GB
+
+2026-03-06 12:45:10 WARN  GCMonitor - High GC activity detected
+GC Time: 3.2 seconds
+
+2026-03-06 12:45:15 ERROR CacheManager - Failed to evict cache entry
+java.lang.OutOfMemoryError: Java heap space
+    at java.util.HashMap.resize(HashMap.java:704)
+    at java.util.HashMap.putVal(HashMap.java:663)
+    at com.company.cache.CustomerCache.add(CustomerCache.java:54)
+
+2026-03-06 12:45:18 ERROR RequestHandler - Failed to process request
+java.lang.OutOfMemoryError: Java heap space
+
+2026-03-06 12:45:19 WARN  SecurityFilter - Memory buffer not cleared properly
+
+2026-03-06 12:45:21 INFO  Kubernetes - Container memory limit exceeded
+
+2026-03-06 12:45:21 ERROR kubelet - Container killed due to OOM
+
+State: OOMKilled
+Restart Count: 3
